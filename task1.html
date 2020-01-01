@@ -1,0 +1,188 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style>
+      .col
+      {
+        border: 1px solid black;
+        width:50px;
+        text-align: center;
+      }
+     
+    </style>
+    
+
+  </head>
+    <body>
+      
+   <br>
+
+<input type="text" name="text1" id="textbox1">
+<button type="submit" name="total" onclick="onsearch();">search</button>
+
+<select  id ="s1" onchange="displaydata();">
+  <option value="nirali">nirali</option>
+  <option value="riya">riya</option>
+  <option value="kishan">kishan</option>
+  <option value="jerry">jerry</option>
+<option value="vasanti">vasanti</option>
+<option value="drasti">drasti</option>
+<option value="mehul">mehul</option>
+<option value="parth">parth</option>
+</select> 
+<br>
+<div id="displayoptiondata"></div>
+<br>
+
+
+<ul id="searchdata"></ul>
+
+
+<br><br>
+
+    </body>
+
+    <script>
+
+
+var emp = [
+      {id:1,name:"nirali",age:20,salary:2},
+      {id:2,name:"riya",age:21,salary:2},
+      {id:3,name:"kishan",age:21,salary:2},
+      {id:4,name:"jerry",age:21,salary:2},
+      {id:5,name:"vasanti",age:21,salary:2},
+      {id:6,name:"drasti",age:21,salary:2},
+      {id:7,name:"mehul",age:21,salary:2},
+      {id:8,name:"parth",age:21,salary:2},
+
+
+      ]
+    
+     document.write('<table id ="tableempid" style="display:block;"><tr><td class="col">id</td><td class="col">name</td><td class="col">age</td><td class="col">salary</td><td class="col"></td></tr>');
+    
+function displayemp()
+{
+
+for(var i=0;i<emp.length;i++)
+           {
+      
+
+              
+               
+document.write('<tr><td class="col" >'+emp[i].id + '</td><td class="col">'+emp[i].name +'</td><td class="col">' + emp[i].age +'</td><td class="col">' +emp[i].salary+ '</td><td class="col"><input type="text" id ="'+emp[i].id+'" value="'+emp[i].salary+'"/></td></tr>');
+
+
+              
+           }
+           document.write('</table>');
+
+}
+
+displayemp();
+
+
+
+
+
+
+
+      
+      function totalsal()
+         {
+
+  
+var sum = emp.reduce((acc,cur_val)=>{
+
+var inputsal =parseInt(document.getElementById(cur_val.id).value);
+console.log(inputsal);         
+
+if(inputsal==cur_val.salary)
+{
+return acc+cur_val.salary;
+
+}
+else
+{
+
+return acc+inputsal;
+}
+
+},0);
+
+
+document.getElementById("displaydata").innerHTML=sum;
+}
+
+function displaydata()
+       {
+        var x =document.getElementById("totalid");
+if(x.style.display==="block")
+{
+  x.style.display="none";
+}
+        document.getElementById("tableempid").innerHTML= " ";
+           
+           var displayname = emp.filter((empname)  =>
+           {
+                  return empname.name == document.getElementById("s1").value;
+          
+           });
+          
+          console.log(displayname);
+        
+          for(var k=0;k<displayname.length;k++)
+         {
+
+    
+      
+                document.getElementById("displayoptiondata").innerHTML=  '<table ><tr><td class="col">id</td><td class="col">name</td><td class="col">age</td><td class="col">salary</td><tr><td class="col">'+displayname[k].id + '</td><td class="col">'+ displayname[k].name + '</td><td class="col">' + displayname[k].age + '</td><td class="col">' + displayname[k].salary+
+'</td></tr></table>';
+       }
+      
+            
+         }
+
+function onsearch()
+
+{
+var x =document.getElementById("totalid");
+if(x.style.display==="block")
+{
+  x.style.display="none";
+}
+document.getElementById("tableempid").innerHTML= " ";
+
+  var searchname=emp.filter((empname) =>
+  {
+      var inputvalue= document.getElementById("textbox1").value;
+    
+      return empname.name.match(inputvalue);  
+     
+      
+});
+console.log(searchname);
+
+var li = document.createElement("li");
+li.style.listStyleType="none";
+for(var n=0;n<searchname.length;n++)
+{
+var data= searchname[n].id + " " +searchname[n].name + "  " + searchname[n].age + " " + searchname[n].salary;
+console.log(data);
+var text = document.createTextNode(data);
+console.log(text);
+li.appendChild(text);
+document.getElementById("searchdata").appendChild(li);
+var br =document.createElement("br");
+li.appendChild(br);
+document.getElementById("searchdata").appendChild(li);
+
+
+}
+}
+</script>
+<body>
+  <button type="submit" name="total" onclick="totalsal();"  style="margin-left:100px; float:left; display:block;" id="totalid" >TOTAL SALARY</button>
+  <div id="displaydata" style="padding-left:230px;padding-bottom:50px;"></div>
+<br><br>
+</body>
+    </html>
